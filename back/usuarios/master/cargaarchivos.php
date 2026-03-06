@@ -13,11 +13,13 @@ require_once '../../config/config.php';
 $mensaje_exito = $_SESSION['mensaje_exito'] ?? '';
 $mensaje_error = $_SESSION['errores'] ?? '';
 $datos_formulario = $_SESSION['datos_formulario'] ?? [];
+$noticia_id = $_SESSION['noticia_id'] ?? null;
 
 // Limpiar las variables de sesión después de usarlas
 unset($_SESSION['mensaje_exito']);
 unset($_SESSION['errores']);
 unset($_SESSION['datos_formulario']);
+unset($_SESSION['noticia_id']);
 
 // Valores por defecto para el formulario
 $titulo = $datos_formulario['titulo'] ?? '';
@@ -393,6 +395,14 @@ $destacada = $datos_formulario['destacada'] ?? 'no';
             <?php if ($mensaje_exito): ?>
                 <div class="alert alert-success">
                     <strong>Éxito:</strong> <?php echo htmlspecialchars($mensaje_exito); ?>
+                    <?php if ($noticia_id): ?>
+                        <br><br>
+                        <strong>Link de la noticia:</strong><br>
+                        <a href="https://chavacalderon.mx/noticiacompleta.html?id=<?php echo $noticia_id; ?>" target="_blank">
+                            https://chavacalderon.mx/noticiacompleta.html?id=<?php echo $noticia_id; ?>
+                        </a>
+                        <button type="button" onclick="copiarLink('https://chavacalderon.mx/noticiacompleta.html?id=<?php echo $noticia_id; ?>', this)" style="margin-left:10px; padding:4px 10px; cursor:pointer;">📋 Copiar</button>
+                    <?php endif; ?>
                 </div>
                 <script>
                     // Limpiar el formulario después de mostrar el mensaje de éxito
@@ -646,6 +656,14 @@ $destacada = $datos_formulario['destacada'] ?? 'no';
                 return false;
             }
         });
+
+        function copiarLink(url, btn) {
+            navigator.clipboard.writeText(url).then(() => {
+                const original = btn.textContent;
+                btn.textContent = '✅ Copiado';
+                setTimeout(() => { btn.textContent = original; }, 2000);
+            });
+        }
     </script>
 </body>
 </html>

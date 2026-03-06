@@ -14,7 +14,7 @@ if (!isset($_SESSION['nombreusuario']) || $_SESSION['tipousuario'] !== 'master')
 }
 
 // Verificar que todos los campos requeridos estén presentes
-if (!isset($_POST['titulo']) || !isset($_POST['contenido'])) {
+if (!isset($_POST['contenido'])) {
     $_SESSION['errores'] = "Faltan campos requeridos";
     $_SESSION['datos_formulario'] = $_POST;
     header("Location: ../master/cargaarchivos.php");
@@ -150,6 +150,9 @@ try {
         
         // Limpiar datos del formulario guardados en sesión
         unset($_SESSION['datos_formulario']);
+        
+        // Guardar ID de la noticia recién creada
+        $_SESSION['noticia_id'] = $pdo->lastInsertId();
         
         // Mensaje de éxito
         $_SESSION['mensaje_exito'] = "Noticia creada correctamente" . ($destacada === 'si' ? " y marcada como destacada" : "") . ".";

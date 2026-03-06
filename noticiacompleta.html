@@ -73,7 +73,8 @@
     margin-bottom: 15px;
     font-weight: 700;
     text-align: center;
-  }
+    min-height: 2.5rem;   /* ← AGREGAR ESTA LÍNEA */
+  } 
 
   .fecha-noticia {
     font-size: 1.2rem;
@@ -378,7 +379,7 @@
 
             // Construir el HTML completo
             contenedor.innerHTML = `
-                <h1>${noticia.titulo || 'Sin título'}</h1>
+                <h1>${noticia.titulo || ''}</h1>
                 ${imagenesHTML}
                 <div class="fecha-noticia">
                     Publicado el: ${noticia.fecha_publicacion}
